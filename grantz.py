@@ -12,8 +12,7 @@ def _hash(xy, n):
 
 
 def validate_update(
-        x: List[Tuple[int, int]], dx: List[Tuple[int, int]], *,
-        world_size: Tuple[int, int]
+    x: List[Tuple[int, int]], dx: List[Tuple[int, int]], *, world_size: Tuple[int, int]
 ) -> List[bool]:
     """
     Validates updates x + dx
@@ -59,7 +58,7 @@ def validate_update(
     # condition (3)
     src = np.repeat(hash_x[:, np.newaxis], n, axis=1)
     dst = np.repeat(hash_y[:, np.newaxis], n, axis=1)
-    t = (dst == src.T)
+    t = dst == src.T
     invalid |= np.any(t & t.T, axis=0)
 
     return np.invert(invalid).tolist()
