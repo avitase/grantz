@@ -23,8 +23,8 @@ def validate_update(
       (2) updated positions are unique
       (3) it is not a swapping move (A goes to B, and B goes to A)
 
-    :param x: Current position
-    :param dx: Update step
+    :param x: Current position as a list of integer pairs
+    :param dx: Update step as a list of integer pairs
     :param world_size: Length and height of the world
     :return: Mask of valid updates
     """
@@ -42,7 +42,6 @@ def validate_update(
 
     y = x + dx
     hash_x = _hash(x, h)
-    hash_y = _hash(y, h)
 
     # sanity check: are positions unique?
     assert np.all(np.unique(hash_x, return_counts=True)[1] == 1)
@@ -50,6 +49,7 @@ def validate_update(
     # condition (1)
     invalid = _out_of_bounds(y, w, h)
     y[invalid] = x[invalid]
+    hash_y = _hash(y, h)
 
     # condition (2)
     v, k = np.unique(hash_y, return_counts=True)
